@@ -33,14 +33,14 @@ export interface IBuyer {
 
 // Ответ
 
-export interface Iproducts {
+export interface IProducts {
     items: IProduct[];
     total: number;
 }
 
 // Содержимое заказа
 
-export interface Ibuyers extends IBuyer {
+export interface IBuyers extends IBuyer {
     total: number;
     items: string[];
 }
