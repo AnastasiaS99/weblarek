@@ -1,41 +1,38 @@
-import {IProduct} from '../../types';
+import { IProduct } from "../../types";
+import { IEvents } from "../base/Events";
 
 // Объявление класса
 
 export class Products {
 
-// Свойства массива
+// Поля класса
 
-    private products: IProduct[] = [];
-    private productsFocus: IProduct | null = null;
+    protected products: IProduct[] = [];
+    protected selectedProduct: IProduct | null = null;
 
-// Сохранение массива товаров полученного в параметрах метода;
+// Конструктор
 
-    saveproducts(products: IProduct[]): void {
-        this.products = Array.isArray(products) ? [...products] : [];
+    constructor(protected events: IEvents) {}
+
+// Массив товаров
+
+    saveproducts(items: IProduct[]): void {
+        this.products = items;
+        console.log('Products loaded:', this.products.length);
+        this.events.emit('products:visiable', { items: this.products });
     }
 
-// Получение массива товаров из модели;
+// Текущий список продуктов
 
     getproducts(): IProduct[] {
-        return [...this.products];
+        return this.products;
     }
 
-// Получение одного товара по его id;
+// Текущий выбранный продукт
 
-    getproductsById(id: string): IProduct | undefined {
-        return this.products.find((product) => product.id === id);
-    }
-    
-// Сохранение товара для подробного отображения;
-
-    saveproductsSelect(products: IProduct | null): void {
-        this.productsFocus = products;
-    }
-
-// Получение товара для подробного отображения.
-
-    getproductsSelect(): IProduct | null {
-        return this.productsFocus;
+    selectedproduct(product: IProduct): void {
+        this.selectedProduct = product;
+        console.log('Product set for preview:', product.title);
+        this.events.emit('product:changed', { product });
     }
 }

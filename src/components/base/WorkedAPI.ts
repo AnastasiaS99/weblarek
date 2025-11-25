@@ -1,23 +1,25 @@
-import { IApi, Iproducts, Ibuyers } from '../../types/index';
+import { IApi, IProductList, IOrderResult, IOrderRequest } from "../../types";
+
 
 // Объявление класса
-
 export class WorkedAPI {
-    api: IApi;
+    private api: IApi;
+
+// Конструктор
 
     constructor(api: IApi) {
         this.api = api;
     }
 
-// Данные о продуктах, полученные из сервера
+// Возвращение списка продуктов
 
-    async fetchProducts(): Promise<Iproducts> {
-        return await this.api.get<Iproducts>('/product/');
+    async getProductList(): Promise<IProductList> {
+        return await this.api.get<IProductList>('/product');
     }
-    
-// Отправка на сервер информации о покупателях и товарах
 
-    async sendOrder(orderData: Ibuyers): Promise<{id: string, total: number}> {
-        return await this.api.post<{id: string, total: number}>('/order/', orderData);
+// Новый заказ
+
+    async createOrder(order: IOrderRequest): Promise<IOrderResult> {
+        return await this.api.post<IOrderResult>('/order', order);
     }
 }

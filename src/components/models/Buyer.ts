@@ -1,52 +1,90 @@
-import {IBuyer, TPayment} from '../../types';
+import { IBuyer, TPayment } from "../../types";
+import { IEvents } from "../base/Events";
 
 // Объявление класса
 
 export class Buyer {
-    private payment: TPayment | null = null;
-    private email = '';
-    private phone = '';
-    private address = '';
 
-// Сохранение данных в модели. 
-// Один общий метод или отдельные методы для каждого поля;
+// Поля класса    
 
-    saveBuyer(data: Partial<IBuyer>): void {
-        if (data.payment !== undefined) this.payment = data.payment;
-        if (data.email !== undefined) this.email = data.email;
-        if (data.phone !== undefined) this.phone = data.phone;
-        if (data.address !== undefined) this.address = data.address;
+    private buyer: IBuyer = {
+        payment: '' as TPayment,
+        email: '',
+        phone: '',
+        address: ''
+    };
+
+// Конструктор
+
+    constructor(protected events: IEvents) {} 
+
+// Способ оплаты
+
+    savepayment(payment: TPayment): void {
+        this.buyer.payment = payment;
+        this.events.emit('buyer:changed', { field: 'payment' });
     }
 
-// Получение всех данных покупателя;
+// Электронный адрес
 
-    getBuyer(): IBuyer {
-        return {
-            payment: this.payment,
-            email: this.email,
-            phone: this.phone,
-            address: this.address,
-        };
+    saveemail(email: string): void {
+        this.buyer.email = email;
+        this.events.emit('buyer:changed', { field: 'email' });
     }
 
-// Очистка данных покупателя;
+// Телефон
 
-    clearBuyer(): void {
-        this.payment = null;
-        this.email = '';
-        this.phone = '';
-        this.address = '';
+    savephone(phone: string): void {
+        this.buyer.phone = phone;
+        this.events.emit('buyer:changed', { field: 'phone' }); 
     }
 
-// Валидация данных.
+// Адрес
 
-    validateBuyer(): Record<string, string> {
-        const errors: Record<string, string> = {};
-        if (!this.payment) errors.payment = 'Не выбран вид оплаты';
-        if (!this.email.trim()) errors.email = 'Укажите адрес электронной почты';
-        if (!this.phone.trim()) errors.phone = 'Укажите телефон';
-        if (!this.address.trim()) errors.address = 'Укажите адрес доставки';
+    saveaddress(address: string): void {
+        this.buyer.address = address;
+        this.events.emit('buyer:changed', { field: 'address' });
+    }
+
+// Проверка на ошибки     
+
+    buyervalidate(): { [key: string]: string } {
+        const errors: { [key: string]: string } = {};
+
+        if (!this.buyer.payment) {
+            errors.payment = 'Не выбран способ оплаты';
+        }
+
+        if (!this.buyer.address?.trim()) {
+            errors.address = 'Не указан адрес';
+        }
+
+        if (!this.buyer.email?.trim()) {
+            errors.email = 'Не указан email';
+        }
+
+        if (!this.buyer.phone?.trim()) {
+            errors.phone = 'Не указан телефон';
+        }
+
         return errors;
     }
 
+// Сохранение данных покупателя
+
+    savebuyerdata(): IBuyer {
+        return { ...this.buyer };
+    }
+
+// Очистка данных
+
+    buyerclear(): void {
+        this.buyer = {
+            
+            payment: '' as TPayment,
+            email: '',
+            phone: '',
+            address: ''
+        };
+    }
 }

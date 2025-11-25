@@ -125,61 +125,288 @@ Presenter - презентер содержит основную логику п
 Хранение данных покупателей. 
 
 #### Поля класса
-`payment: 'card' | 'cash' | null` - Хранение способа оплаты. 
-`email: string` - Хранение адреса электронной почты. 
-`phone: string` - Хранение телефона. 
-`address: string` - Хранение адреса. 
+
 
 #### Методы класса
-`saveBuyer(data: Partial<IBuyer>): void` - Сохранение данных в модели.
-`getBuyer(): IBuyer` - Получение всех данных покупателя.
-`clearBuyer(): void` - Очистка данных покупателя.
-`validateBuyer(): Record<string, string>` - Валидация данных.
+`savepayment(payment: TPayment): void ` - Выбор способа оплаты.
+`saveemail(email: string): void ` - Для введения электронного адреса.
+`savephone(phone: string): void ` - Для введения номера телефона.
+`saveaddress(address: string): void ` - Для введения адреса.
+`buyervalidate(): { [key: string]: string } ` - Проверка на ошибки.
+`savebuyerdata(): IBuyer ` - Сохранение данных.
+`buyerclear(): void ` - Стирание данных.
 
 ### Products
 Хранение данных товаров.
 
 #### Поля класса
 
-`items: IProduct[]` - Массив всех товаров.
-`getproductsSelect: IProduct | null` - Товар, выбранный для детального просмотра.
+`protected products: IProduct[] = []` - Массив всех товаров.
+`protected selectedProduct: IProduct | null = null` - Товар, выбранный для детального просмотра.
 
 #### Методы класса
 
 `saveproducts(items: IProduct[]): void` - Сохранение массива товаров полученного в параметрах метода.
 `getproducts(): IProduct[]` - Получение массива товаров из модели.
-`getproductsById(id: string): IProduct | undefined` - Получение одного товара по его id.
-`saveproductsSelect(item: IProduct | null): void` - Сохранение товара для подробного отображения.
-`getproductsSelect(): IProduct | null` - Получение товара для подробного отображения.
+`selectedproduct(product: IProduct): void ` - Отображение выбранного продукта
 
 ### ShoppingCart
 Корзина покупателя. 
 
 #### Поля класса
 
-`items: IProduct[]` — Массив товаров в корзине.
+`private items: IProduct[] = [] ` — Массив товаров в корзине.
 
 #### Методы класса
 
-`getProducts(): IProduct[]` - Получение массива товаров, которые находятся в корзине.
-`addProduct(item: IProduct): void` - Добавление товара, который был получен в параметре, в массив корзины.
-`removeProduct(id: string): void` - Удаление товара, полученного в параметре из массива корзины.
-`clearShoppingCart(): void` - Очистка корзины.
-`getTotal(): number` - Получение стоимости всех товаров в корзине.
-`getCount(): number` — Получение количества товаров в корзине.
-`hasProduct(id: string): boolean` - Проверка наличия товара в корзине по его id, полученного в параметр метода.
+`additemshoppingcart(item: IProduct): void ` - Добавление товаров в корзину
+`removeitemshoppingcart ` - Удаление товаров из корзины
+`countitemshoppingcart ` - Количество товаров в корзине
+`saveitemsshoppingcart` - Текущий список товаров
+`totalpriceshoppingcart ` - Сумма корзины. 
+`containsshoppingcart ` - Проверка товаров в корзине.
+`clearshoppingcart ` - Очистка корзины. 
 
 ## Слой коммуникации
 Работа с сервером.
 
 #### Поля класса
 
-`api: IApi` - Хранение данных запроса. 
+`private api: IApi` - Хранение данных запроса. 
 
 #### Методы класса
 
-`fetchProducts()` - Данные о продуктах, полученные из сервера.
-`sendOrder(orderData: Ibuyers)` — Отправка на сервер информации о покупателях и товарах.
+`async getProductList(): Promise<IProductList> ` - Возвращение списка товаров.
+`async createOrder(order: IOrderRequest): Promise<IOrderResult> ` - Новый товар.
+
+## Компоненты представления
+
+### Cart
+Класс для карточек товара. 
+
+#### Поля класса
+
+`protected fortitle: HTMLElement ` - Название товара.
+`protected forprice: HTMLElement ` - Цена.
+`protected forid: string = '' ` - ID.
+
+#### Методы класса
+
+`set id(value: string) ` - ID товара. 
+`set title(value: string) ` - Заголовок. 
+`set price(value: number | null) ` - Цена. 
+
+### Cartcatolog 
+Класс для католога. 
+
+#### Поля класса
+
+`protected forcategory: HTMLElement ` - Категория.
+`protected forimage: HTMLImageElement ` - Изобрежние. 
+
+#### Методы класса
+
+`set category(value: string) ` - Установка категорий. 
+`set image(value: string) ` - Установка изображений. 
+`render(product: IProduct): HTMLElement ` - Получение объекта товара. 
+
+### Cardpreview
+Предпросмотр карточек
+
+#### Поля класса
+
+`protected fordescription: HTMLElement ` - Для описания. 
+`protected forbutton: HTMLButtonElement ` - Для кнопки. 
+`protected forcategory: HTMLElement ` - Для категории.
+`protected forimage: HTMLImageElement ` - Для изображения. 
+
+#### Методы класса
+
+`set description(value: string) ` - Установка описания. 
+`set category(value: string) ` - Установка категории. 
+`set incart(value: boolean) ` - Установка нужного текста на кнопке.
+`set image(value: string) ` - Установка изображения. 
+`set price(value: number | null) ` - Установка цены. 
+
+### Cardshoppingcart
+Корзина с покупками.
+
+#### Поля класса
+
+`protected forindex: HTMLElement ` - Номер позиции. 
+`protected fordeleteButton: HTMLButtonElement` - Кнопка удаления товара из корзины. 
+
+#### Методы класса
+
+`set index(value: number) ` - Установка номера элемента. 
+
+## Формы
+Класс для форм. 
+
+### Поля класса
+
+`protected forsubmit: HTMLButtonElement ` - Для отправки форм. 
+`protected forerrors: HTMLElement ` - Для ошибок. 
+
+#### Методы класса
+
+`protected abstract onSubmit(): void ` - Обработка формы. 
+`set valid(value: boolean) ` - Кнопка для оплаты. 
+`set errors(value: string) ` - Сообщения об ошибках.
+
+## Формы
+Форма для контактов. 
+
+### Поля класса
+
+`protected foremail: HTMLInputElement ` - Для электронного адреса.
+`protected forphone: HTMLInputElement ` - Для телефона.
+
+#### Методы класса
+
+`protected onSubmit(): void ` - Обработка кнопки. 
+`set email(value: string) ` - Для электронного адреса.
+`set phone(value: string) ` - Для телефона. 
+
+###
+Форма для заказа. 
+
+### Поля класса
+
+`protected forpaymentButtons: NodeListOf<HTMLButtonElement> ` - Для кнопки. 
+`protected foraddress: HTMLInputElement ` - Для адреса. 
+
+#### Методы класса
+
+`this.forpaymentButtons.forEach(button => ` - Для обработки кнопки. 
+`this.foraddress.addEventListener('input', () => ` - Для введения адреса. 
+`protected onSubmit(): void ` - Обработка отправки. 
+`set payment(value: TPayment) ` - Установка способа оплаты. 
+`set address(value: string) ` - Отправка адреса. 
+
+## Компоненты 
+
+### Gallery 
+Галерея. 
+
+#### Поля класса
+
+Наследуются из Component.
+
+#### Методы класса
+
+`set catalog(items: HTMLElement[]) ` - Установка католога. 
+
+### Header
+Заголовок. 
+
+#### Поля класса
+
+`protected cartbutton: HTMLButtonElement ` - Кнопка для корзины. 
+`protected counterelement: HTMLElement ` - Счетчик товаров в корзине. 
+
+#### Методы класса
+
+`set counter(value: number) ` - Обновление счётчик товаров. 
+
+### Model
+Модальное окно. 
+
+#### Поля класса
+
+`protected forclosebutton: HTMLButtonElement ` - Кнопка закрытия. 
+`protected forcontent: HTMLElement ` - Контент. 
+`protected forhandleEscape: (event: KeyboardEvent) => void ` - Обработчик клавиши. 
+
+#### Методы класса
+
+`this.forcontent.addEventListener('click', (event) => event.stopPropagation())` - Установка содержимого. 
+
+### Page
+Страница. 
+
+#### Поля класса
+
+Наследуются из Component.
+
+#### Методы класса 
+
+`setView(view: 'catalog' | 'basket' | 'order'): void` - Установка страницы. 
+`getCurrentView(): string ` - Установка текущей страницы. 
+
+### ShoppingCartView
+Корзина. 
+
+#### Поля класса
+
+`protected forlist: HTMLElement ` - Список товаров. 
+`protected fortotal: HTMLElement ` - Общая стоимость товаров. 
+`protected forbutton: HTMLButtonElement ` - Кнопка для оформления заказа. 
+
+#### Методы класса 
+
+`this.forbutton.addEventListener('click', () => ` - Обновление корзины. 
+
+### Success
+Успешное оформление заказа. 
+
+#### Поля класса 
+
+`protected fortotal: HTMLElement ` - Итоговая сумма заказа. 
+`protected forcloseButton: HTMLButtonElement ` - Кнопка закрытия корзины. 
+
+#### Методы класса 
+
+`set total(value: number) ` - Отображение суммы в корзине. 
+
+## Презентер 
+
+### Модели
+
+`Buyer ` - Данные покупателя. 
+`Products ` - Данные товаров. 
+`ShoppingCart ` - Данные про корзину покупателя. 
+`WorkedAPI ` - Данные для работы с сервером. 
+
+### Представления
+
+`Contactform ` - Форма для данных покупателя. 
+`Form ` - Общая форма. 
+`Orderform ` - Форма для заказа. 
+`Gallery ` - Галерея. 
+`Header ` - Заголовок. 
+`Model ` - Модальное окно. 
+`Page ` - Страница. 
+`ShoppingCartView ` - Корзина покупателя. 
+`Success` - Успешная работа с заказом. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
