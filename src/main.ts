@@ -13,11 +13,11 @@ import { Header } from './components/view/Header.ts';
 import { ShoppingCartView } from './components/view/ShoppingCartView.ts'; 
 import { Gallery } from './components/view/Gallery.ts'; 
 import { Model } from './components/view/Model.ts'; 
-import { Cardcatolog } from './components/view/Cards/Cardcatolog.ts'; 
-import { Cardpreview } from './components/view/Cards/Cardpreview.ts'; 
-import { Cardshoppingcart } from './components/view/Cards/Cardshoppingcart.ts'; 
-import { Orderform } from './components/view/Forms/Orderform.ts'; 
-import { Contactform } from './components/view/Forms/Contactform.ts'; 
+import { CardCatolog } from './components/view/Cards/CardCatolog.ts'; 
+import { CardPreview } from './components/view/Cards/CardPreview.ts'; 
+import { CardShoppingCart } from './components/view/Cards/CardShoppingCart.ts'; 
+import { OrderForm } from './components/view/Forms/OrderForm.ts'; 
+import { ContactForm } from './components/view/Forms/ContactForm.ts'; 
 import { Success } from './components/view/Success.ts'; 
 import { TPayment } from './types/index.ts'; 
 
@@ -46,16 +46,16 @@ const trygallery = new Gallery(document.querySelector('.gallery')!);
 const trymodal = new Model(document.getElementById('modal-container')!, events); 
 const trypage = new Page(document.querySelector('.page')!, events);
 const tryshoppingcartview = new ShoppingCartView(cloneTemplate(tryshoppingcartbasket), events); 
-const tryorderform = new Orderform(cloneTemplate(tryorder), events); 
-const trycontactform = new Contactform(cloneTemplate(trycontacts), events); 
+const tryorderform = new OrderForm(cloneTemplate(tryorder), events); 
+const trycontactform = new ContactForm(cloneTemplate(trycontacts), events); 
 
 
 // Загрузка галерии  
 
 events.on('products:visiable', () => { 
-    const products = tryproducts.getproducts(); 
+    const products = tryproducts.getProducts(); 
     const cards = products.map(product => { 
-        const card = new Cardcatolog(cloneTemplate(trycardcatalog), events); 
+        const card = new CardCatolog(cloneTemplate(trycardcatalog), events); 
         return card.render(product); 
     }); 
     trygallery.catalog = cards; 
@@ -64,8 +64,8 @@ events.on('products:visiable', () => {
 // Выбранный товар
 
 events.on('product:changed', (data: { product: IProduct }) => { 
-    const preview = new Cardpreview(cloneTemplate(trycardpreview), events); 
-    const incart = tryshoppingcart.containsshoppingcart(data.product.id); 
+    const preview = new CardPreview(cloneTemplate(trycardpreview), events); 
+    const incart = tryshoppingcart.containsShoppingCart(data.product.id); 
      
     preview.id = data.product.id; 
     preview.title = data.product.title; 
@@ -82,10 +82,10 @@ events.on('product:changed', (data: { product: IProduct }) => {
 // Обновление корзины
 
 events.on('cart:changed', () => { 
-    tryheader.counter = tryshoppingcart.countitemshoppingcart(); 
+    tryheader.counter = tryshoppingcart.countItemShoppingCart(); 
 
-    const shoppincartitems = tryshoppingcart.saveitemsshoppingcart().map((item, index) => { 
-        const card = new Cardshoppingcart(cloneTemplate(trycardshoppingcart), events); 
+    const shoppincartitems = tryshoppingcart.saveItemsShoppingCart().map((item, index) => { 
+        const card = new CardShoppingCart(cloneTemplate(trycardshoppingcart), events); 
         card.id = item.id; 
         card.title = item.title; 
         card.price = item.price; 
@@ -93,15 +93,15 @@ events.on('cart:changed', () => {
         return card.render(); 
     }); 
      
-    tryshoppingcartview.shoppincartitems = shoppincartitems; 
-    tryshoppingcartview.total = tryshoppingcart.totalpriceshoppingcart(); 
+    tryshoppingcartview.shoppingCartItems = shoppincartitems; 
+    tryshoppingcartview.total = tryshoppingcart.totalPriceShoppingCart(); 
 }); 
 
 // Обработка данных покупателя
 
 events.on('buyer:changed', (data: { field?: string }) => { 
-    const errors = trybuyer.buyervalidate(); 
-    const buyerdatas = trybuyer.savebuyerdata(); 
+    const errors = trybuyer.buyerValidate(); 
+    const buyerdatas = trybuyer.saveBuyerData(); 
 
     if (!data.field || data.field === 'payment' || data.field === 'address') {
         tryorderform.payment = buyerdatas.payment;
@@ -131,21 +131,21 @@ events.on('buyer:changed', (data: { field?: string }) => {
 // Выбор карточки
 
 events.on('card:select', (data: { id: string }) => { 
-    const product = tryproducts.getproducts().find(item => item.id === data.id); 
+    const product = tryproducts.getProducts().find(item => item.id === data.id); 
     if (product) { 
-        tryproducts.selectedproduct(product); 
+        tryproducts.selectProduct(product); 
     } 
 }); 
 
 // Предварительный просмотр товара
 
 events.on('preview:button:click', (data: { id: string }) => { 
-    const product = tryproducts.getproducts().find(item => item.id === data.id); 
+    const product = tryproducts.getProducts().find(item => item.id === data.id); 
     if (product) { 
-        if (tryshoppingcart.containsshoppingcart(product.id)) { 
-            tryshoppingcart.removeitemshoppingcart(product.id); 
+        if (tryshoppingcart.containsShoppingCart(product.id)) { 
+            tryshoppingcart.removeItemShoppingCart(product.id); 
         } else { 
-            tryshoppingcart.additemshoppingcart(product); 
+            tryshoppingcart.addItemShoppingCart(product); 
         } 
         trymodal.close(); 
     } 
@@ -154,7 +154,7 @@ events.on('preview:button:click', (data: { id: string }) => {
 // Удаление товара из корзины
 
 events.on('card:remove', (data: { id: string }) => { 
-    tryshoppingcart.removeitemshoppingcart(data.id); 
+    tryshoppingcart.removeItemShoppingCart(data.id); 
 }); 
 
 // Открытие корзины
@@ -168,7 +168,7 @@ events.on('basket:open', () => {
 // Оформление заказа
 
 events.on('basket:order', () => {
-    const buyerData = trybuyer.savebuyerdata(); 
+    const buyerData = trybuyer.saveBuyerData(); 
     trymodal.content = tryorderform.render({ 
         payment: buyerData.payment, 
         address: buyerData.address 
@@ -196,11 +196,11 @@ events.on('success:close', () => {
 // Отправление заказа
 
 events.on('order:submit', () => { 
-    const buyerData = trybuyer.savebuyerdata(); 
+    const buyerData = trybuyer.saveBuyerData(); 
     trycontactform.email = buyerData.email; 
     trycontactform.phone = buyerData.phone; 
      
-    const errors = trybuyer.buyervalidate(); 
+    const errors = trybuyer.buyerValidate(); 
     const contactsErrors = [errors.email, errors.phone].filter(Boolean).join(', ');
     trycontactform.valid = !errors.email && !errors.phone; 
     trycontactform.errors = contactsErrors;
@@ -211,28 +211,28 @@ events.on('order:submit', () => {
 // Изменение оплаты 
 
 events.on('order:paymentChange', (data: { payment: TPayment }) => { 
-    trybuyer.savepayment(data.payment); 
+    trybuyer.savePayment(data.payment); 
     events.emit('buyer:changed', { field: 'payment' });
 }); 
 
 // Изменение адреса
 
 events.on('order:addressChange', (data: { address: string }) => { 
-    trybuyer.saveaddress(data.address); 
+    trybuyer.saveAddress(data.address); 
     events.emit('buyer:changed', { field: 'address' });
 }); 
 
 // Изменение электронного адреса
 
 events.on('contacts:emailChange', (data: { email: string }) => { 
-    trybuyer.saveemail(data.email); 
+    trybuyer.saveEmail(data.email); 
     events.emit('buyer:changed', { field: 'email' });
 }); 
 
 // Изменение телефона
 
 events.on('contacts:phoneChange', (data: { phone: string }) => { 
-    trybuyer.savephone(data.phone); 
+    trybuyer.savePhone(data.phone); 
     events.emit('buyer:changed', { field: 'phone' });
 }); 
 
@@ -241,10 +241,10 @@ events.on('contacts:phoneChange', (data: { phone: string }) => {
 events.on('contacts:submit', async () => { 
 
     try { 
-        const total = tryshoppingcart.totalpriceshoppingcart(); 
+        const total = tryshoppingcart.totalPriceShoppingCart(); 
         const orderResult = await larekApi.createOrder({ 
-            ...trybuyer.savebuyerdata(), 
-            items: tryshoppingcart.saveitemsshoppingcart().map(item => item.id), 
+            ...trybuyer.saveBuyerData(), 
+            items: tryshoppingcart.saveItemsShoppingCart().map(item => item.id), 
             total: total 
         }); 
 
@@ -252,8 +252,8 @@ events.on('contacts:submit', async () => {
         success.total = orderResult.total; 
         trymodal.content = success.render(); 
 
-        tryshoppingcart.clearshoppingcart(); 
-        trybuyer.buyerclear(); 
+        tryshoppingcart.clearShoppingCart(); 
+        trybuyer.buyerClear(); 
 
     } catch (error) { 
         console.error('Order error:', error); 
@@ -270,7 +270,7 @@ events.on('success:close', () => {
 async function init() { 
     try { 
         const productList = await larekApi.getProductList(); 
-        tryproducts.saveproducts(productList.items); 
+        tryproducts.saveProducts(productList.items); 
     } catch (error) { 
         console.error('Failed to load products:', error); 
     } 

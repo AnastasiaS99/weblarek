@@ -7,17 +7,17 @@ export class Success extends Component<{ total: number }> {
 
 // Поля класса
 
-    protected fortotal: HTMLElement;
-    protected forcloseButton: HTMLButtonElement;
+    protected forTotal: HTMLElement;
+    protected forCloseButton: HTMLButtonElement;
 
 // Конструктор
 
     constructor(container: HTMLElement, protected events: IEvents) {
         super(container);
-        this.fortotal = this.container.querySelector('.order-success__description')!;
-        this.forcloseButton = this.container.querySelector('.order-success__close')!;
+        this.forTotal = this.container.querySelector('.order-success__description')!;
+        this.forCloseButton = this.container.querySelector('.order-success__close')!;
         
-        this.forcloseButton.addEventListener('click', () => {
+        this.forCloseButton.addEventListener('click', () => {
             this.events.emit('success:close');
         });
     }
@@ -25,6 +25,6 @@ export class Success extends Component<{ total: number }> {
 // Обновление текста
 
     set total(value: number) {
-        this.setText(this.fortotal, `Списано ${value} синапсов`);
+        this.setText(this.forTotal, `Списано ${value} синапсов`);
     }
 }

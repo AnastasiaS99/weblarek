@@ -16,7 +16,7 @@ export class Products {
 
 // Массив товаров
 
-    saveproducts(items: IProduct[]): void {
+    saveProducts(items: IProduct[]): void {
         this.products = items;
         console.log('Products loaded:', this.products.length);
         this.events.emit('products:visiable', { items: this.products });
@@ -24,13 +24,13 @@ export class Products {
 
 // Текущий список продуктов
 
-    getproducts(): IProduct[] {
+    getProducts(): IProduct[] {
         return this.products;
     }
 
 // Текущий выбранный продукт
 
-    selectedproduct(product: IProduct): void {
+    selectProduct(product: IProduct): void {
         this.selectedProduct = product;
         console.log('Product set for preview:', product.title);
         this.events.emit('product:changed', { product });

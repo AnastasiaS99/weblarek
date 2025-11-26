@@ -15,53 +15,53 @@ export class ShoppingCart {
 
 // Добавление товара в корзину
 
-    additemshoppingcart(item: IProduct): void {
+    addItemShoppingCart(item: IProduct): void {
         this.items.push(item);
         this.events.emit('cart:changed', { 
             items: this.items, 
             count: this.items.length,
-            total: this.totalpriceshoppingcart()
+            total: this.totalPriceShoppingCart()
         });
     }
 
 // Удаление товара из корзины
 
-    removeitemshoppingcart(itemId: string): void {
+    removeItemShoppingCart(itemId: string): void {
         this.items = this.items.filter(item => item.id !== itemId);
         this.events.emit('cart:changed', { 
             items: this.items, 
             count: this.items.length,
-            total: this.totalpriceshoppingcart()
+            total: this.totalPriceShoppingCart()
         });
     }
 
 // Количество товаров в корзине
     
-    countitemshoppingcart(): number {
+    countItemShoppingCart(): number {
         return this.items.length;
     }
 
 // Текущий список товаров
 
-    saveitemsshoppingcart(): IProduct[] {
+    saveItemsShoppingCart(): IProduct[] {
         return this.items;
     }
 
 // Сумма корзины
 
-    totalpriceshoppingcart(): number {
+    totalPriceShoppingCart(): number {
         return this.items.reduce((total, item) => total + (item.price || 0), 0);
     }
 
 // Проверка товаров в корзине
 
-    containsshoppingcart(itemId: string): boolean {
+    containsShoppingCart(itemId: string): boolean {
         return this.items.some(item => item.id === itemId);
     }
 
 // Очистка корзины
 
-    clearshoppingcart(): void {
+    clearShoppingCart(): void {
         this.items = [];
         this.events.emit('cart:changed', { 
             items: this.items, 

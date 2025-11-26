@@ -7,15 +7,15 @@ export abstract class Form extends Component<any> {
 
 // Поля класса
     
-    protected forsubmit: HTMLButtonElement;
-    protected forerrors: HTMLElement;
+    protected forSubmit: HTMLButtonElement;
+    protected forErrors: HTMLElement;
 
 // Конструктор
 
     constructor(container: HTMLElement, protected events: IEvents) {
         super(container);
-        this.forsubmit = this.container.querySelector('button[type="submit"]')!;
-        this.forerrors = this.container.querySelector('.form__errors')!;
+        this.forSubmit = this.container.querySelector('button[type="submit"]')!;
+        this.forErrors = this.container.querySelector('.form__errors')!;
 
         this.container.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -30,12 +30,12 @@ export abstract class Form extends Component<any> {
 // Кнопка оплаты
 
     set valid(value: boolean) {
-        this.setDisabled(this.forsubmit, !value);
+        this.setDisabled(this.forSubmit, !value);
     }
 
 // Сообщения об ошибках
 
     set errors(value: string) {
-        this.setText(this.forerrors, value);
+        this.setText(this.forErrors, value);
     }
 }

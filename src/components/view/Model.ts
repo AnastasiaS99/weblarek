@@ -7,24 +7,24 @@ export class Model extends Component<null> {
 
 // Поля класса
 
-    protected forclosebutton: HTMLButtonElement;
-    protected forcontent: HTMLElement;
-    protected forhandleEscape: (event: KeyboardEvent) => void;
+    protected forCloseButton: HTMLButtonElement;
+    protected forContent: HTMLElement;
+    protected forHandleEscape: (event: KeyboardEvent) => void;
 
 // Конструктор
 
     constructor(container: HTMLElement, protected events: IEvents) {
         super(container);
-        this.forclosebutton = this.container.querySelector('.modal__close')!;
-        this.forcontent = this.container.querySelector('.modal__content')!;
+        this.forCloseButton = this.container.querySelector('.modal__close')!;
+        this.forContent = this.container.querySelector('.modal__content')!;
         
-        this.forhandleEscape = (event: KeyboardEvent) => {
+        this.forHandleEscape = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 this.close();
             }
         };
 
-        this.forclosebutton.addEventListener('click', () => {
+        this.forCloseButton.addEventListener('click', () => {
             this.close();
         });
         
@@ -36,20 +36,20 @@ export class Model extends Component<null> {
         
 // Установка содержимого
 
-        this.forcontent.addEventListener('click', (event) => event.stopPropagation());
+        this.forContent.addEventListener('click', (event) => event.stopPropagation());
     }
 
     set content(value: HTMLElement) {
-        this.forcontent.replaceChildren(value);
+        this.forContent.replaceChildren(value);
     }
 
     open(): void {
         this.container.classList.add('modal_active');
-        document.addEventListener('keydown', this.forhandleEscape);
+        document.addEventListener('keydown', this.forHandleEscape);
     }
 
     close(): void {
         this.container.classList.remove('modal_active');
-        document.removeEventListener('keydown', this.forhandleEscape);
+        document.removeEventListener('keydown', this.forHandleEscape);
     }
 }

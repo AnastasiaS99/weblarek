@@ -8,33 +8,33 @@ export abstract class Card extends Component<IProduct> {
 
 // Поля класса
   
-    protected fortitle: HTMLElement; 
-    protected forprice: HTMLElement; 
-    protected forid: string = ''; 
+    protected forTitle: HTMLElement; 
+    protected forPrice: HTMLElement; 
+    protected forId: string = ''; 
 
 // Конструктор
 
     constructor(container: HTMLElement, protected events: IEvents) { 
         super(container); 
-        this.fortitle = this.container.querySelector('.card__title') as HTMLElement; 
-        this.forprice = this.container.querySelector('.card__price') as HTMLElement; 
+        this.forTitle = this.container.querySelector('.card__title') as HTMLElement; 
+        this.forPrice = this.container.querySelector('.card__price') as HTMLElement; 
     } 
 
 // Установка ID
 
     set id(value: string) { 
-        this.forid = value; 
+        this.forId = value; 
     } 
 
 // Установка заголовка
 
     set title(value: string) { 
-        this.setText(this.fortitle, value); 
+        this.setText(this.forTitle, value); 
     } 
 
 // Установка цены
 
     set price(value: number | null) { 
-        this.setText(this.forprice, value === null ? 'Бесценно' : `${value} синапсов`); 
+        this.setText(this.forPrice, value === null ? 'Бесценно' : `${value} синапсов`); 
     } 
 }

@@ -3,26 +3,26 @@ import { IEvents } from '../../base/Events.ts';
 
 // Объявление класса
 
-export class Contactform extends Form {
+export class ContactForm extends Form {
 
 // Поля класса
 
-    protected foremail: HTMLInputElement;
-    protected forphone: HTMLInputElement;
+    protected forEmail: HTMLInputElement;
+    protected forPhone: HTMLInputElement;
 
 // Конструктор
 
     constructor(container: HTMLElement, events: IEvents) {
         super(container, events);
-        this.foremail = this.container.querySelector('input[name="email"]')!;
-        this.forphone = this.container.querySelector('input[name="phone"]')!;
+        this.forEmail = this.container.querySelector('input[name="email"]')!;
+        this.forPhone = this.container.querySelector('input[name="phone"]')!;
         
-        this.foremail.addEventListener('input', () => {
-            this.events.emit('contacts:emailChange', { email: this.foremail.value });
+        this.forEmail.addEventListener('input', () => {
+            this.events.emit('contacts:emailChange', { email: this.forEmail.value });
         });
 
-        this.forphone.addEventListener('input', () => {
-            this.events.emit('contacts:phoneChange', { phone: this.forphone.value });
+        this.forPhone.addEventListener('input', () => {
+            this.events.emit('contacts:phoneChange', { phone: this.forPhone.value });
         });
     }
 
@@ -35,12 +35,12 @@ export class Contactform extends Form {
 // Для отправки электронного адреса
 
     set email(value: string) {
-        this.foremail.value = value;
+        this.forEmail.value = value;
     }
 
 // Для отправки телефона
 
     set phone(value: string) {
-        this.forphone.value = value;
+        this.forPhone.value = value;
     }
 }

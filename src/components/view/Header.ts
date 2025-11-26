@@ -13,17 +13,17 @@ export class Header extends Component<HeaderData> {
 
 // Поля класса
 
-    protected cartbutton: HTMLButtonElement;
-    protected counterelement: HTMLElement;
+    protected cartButton: HTMLButtonElement;
+    protected counterElement: HTMLElement;
 
 // Конструктор
 
     constructor(container: HTMLElement, protected events: IEvents) {
         super(container);
-        this.cartbutton = this.container.querySelector('.header__basket')!;
-        this.counterelement = this.container.querySelector('.header__basket-counter')!;
+        this.cartButton = this.container.querySelector('.header__basket')!;
+        this.counterElement = this.container.querySelector('.header__basket-counter')!;
         
-        this.cartbutton.addEventListener('click', () => {
+        this.cartButton.addEventListener('click', () => {
             this.events.emit('basket:open');
         });
     }
@@ -31,6 +31,6 @@ export class Header extends Component<HeaderData> {
 // Обновление количества товаров
 
     set counter(value: number) {
-        this.setText(this.counterelement, value.toString());
+        this.setText(this.counterElement, value.toString());
     }
 }

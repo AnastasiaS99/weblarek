@@ -4,23 +4,23 @@ import { IEvents } from '../../base/Events.ts';
 
 // Объявление класса
 
-export class Orderform extends Form {
+export class OrderForm extends Form {
 
 // Поля класса
   
-    protected forpaymentButtons: NodeListOf<HTMLButtonElement>;
-    protected foraddress: HTMLInputElement;
+    protected forPaymentButtons: NodeListOf<HTMLButtonElement>;
+    protected forAddress: HTMLInputElement;
 
 // Конструктор
 
     constructor(container: HTMLElement, events: IEvents) {
         super(container, events);
-        this.forpaymentButtons = this.container.querySelectorAll('button[name]');
-        this.foraddress = this.container.querySelector('input[name="address"]')!;
+        this.forPaymentButtons = this.container.querySelectorAll('button[name]');
+        this.forAddress = this.container.querySelector('input[name="address"]')!;
 
 // Обработка кнопок
 
-        this.forpaymentButtons.forEach(button => {
+        this.forPaymentButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const payment = button.name as TPayment;
                 this.events.emit('order:paymentChange', { payment });
@@ -29,8 +29,8 @@ export class Orderform extends Form {
 
 // Для введения адреса
 
-        this.foraddress.addEventListener('input', () => {
-            this.events.emit('order:addressChange', { address: this.foraddress.value }); 
+        this.forAddress.addEventListener('input', () => {
+            this.events.emit('order:addressChange', { address: this.forAddress.value }); 
         });
     }
 
@@ -43,7 +43,7 @@ export class Orderform extends Form {
 // Установка способа оплаты
 
     set payment(value: TPayment) {
-        this.forpaymentButtons.forEach(button => {
+        this.forPaymentButtons.forEach(button => {
             if (button.name === value) {
                 button.classList.add('button_alt-active');
             } else {
@@ -55,6 +55,6 @@ export class Orderform extends Form {
 // Отправка адреса
 
     set address(value: string) {
-        this.foraddress.value = value;
+        this.forAddress.value = value;
     }
 }

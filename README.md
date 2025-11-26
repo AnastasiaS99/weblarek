@@ -125,16 +125,21 @@ Presenter - презентер содержит основную логику п
 Хранение данных покупателей. 
 
 #### Поля класса
-
+`private buyer: IBuyer = { `
+`payment: '' as TPayment, ` - Способ оплаты. 
+`email: '', ` - Электронный адрес. 
+`phone: '',` - Телефон. 
+`address: ''` - Адрес. 
+`}; `
 
 #### Методы класса
-`savepayment(payment: TPayment): void ` - Выбор способа оплаты.
-`saveemail(email: string): void ` - Для введения электронного адреса.
-`savephone(phone: string): void ` - Для введения номера телефона.
-`saveaddress(address: string): void ` - Для введения адреса.
-`buyervalidate(): { [key: string]: string } ` - Проверка на ошибки.
-`savebuyerdata(): IBuyer ` - Сохранение данных.
-`buyerclear(): void ` - Стирание данных.
+`savePayment(payment: TPayment): void ` - Выбор способа оплаты.
+`saveEmail(email: string): void ` - Для введения электронного адреса.
+`savePhone(phone: string): void ` - Для введения номера телефона.
+`saveAddress(address: string): void ` - Для введения адреса.
+`buyerValidate(): { [key: string]: string } ` - Проверка на ошибки.
+`saveBuyerData(): IBuyer ` - Сохранение данных.
+`buyerClear(): void ` - Стирание данных.
 
 ### Products
 Хранение данных товаров.
@@ -146,9 +151,9 @@ Presenter - презентер содержит основную логику п
 
 #### Методы класса
 
-`saveproducts(items: IProduct[]): void` - Сохранение массива товаров полученного в параметрах метода.
-`getproducts(): IProduct[]` - Получение массива товаров из модели.
-`selectedproduct(product: IProduct): void ` - Отображение выбранного продукта
+`saveProducts(items: IProduct[]): void` - Сохранение массива товаров полученного в параметрах метода.
+`getProducts(): IProduct[]` - Получение массива товаров из модели.
+`selectProduct(product: IProduct): void ` - Отображение выбранного продукта
 
 ### ShoppingCart
 Корзина покупателя. 
@@ -159,13 +164,13 @@ Presenter - презентер содержит основную логику п
 
 #### Методы класса
 
-`additemshoppingcart(item: IProduct): void ` - Добавление товаров в корзину
-`removeitemshoppingcart ` - Удаление товаров из корзины
-`countitemshoppingcart ` - Количество товаров в корзине
-`saveitemsshoppingcart` - Текущий список товаров
-`totalpriceshoppingcart ` - Сумма корзины. 
-`containsshoppingcart ` - Проверка товаров в корзине.
-`clearshoppingcart ` - Очистка корзины. 
+`addItemShoppingCart(item: IProduct): void ` - Добавление товаров в корзину
+`removeItemShoppingCart ` - Удаление товаров из корзины
+`countItemShoppingCart ` - Количество товаров в корзине
+`saveItemsShoppingCart` - Текущий список товаров
+`totalPriceShoppingCart ` - Сумма корзины. 
+`containsShoppingCart ` - Проверка товаров в корзине.
+`clearShoppingCart ` - Очистка корзины. 
 
 ## Слой коммуникации
 Работа с сервером.
@@ -186,9 +191,9 @@ Presenter - презентер содержит основную логику п
 
 #### Поля класса
 
-`protected fortitle: HTMLElement ` - Название товара.
-`protected forprice: HTMLElement ` - Цена.
-`protected forid: string = '' ` - ID.
+`protected forTitle: HTMLElement ` - Название товара.
+`protected forPrice: HTMLElement ` - Цена.
+`protected forId: string = '' ` - ID.
 
 #### Методы класса
 
@@ -201,8 +206,8 @@ Presenter - презентер содержит основную логику п
 
 #### Поля класса
 
-`protected forcategory: HTMLElement ` - Категория.
-`protected forimage: HTMLImageElement ` - Изобрежние. 
+`protected forCategory: HTMLElement ` - Категория.
+`protected forImage: HTMLImageElement ` - Изобрежние. 
 
 #### Методы класса
 
@@ -215,10 +220,10 @@ Presenter - презентер содержит основную логику п
 
 #### Поля класса
 
-`protected fordescription: HTMLElement ` - Для описания. 
-`protected forbutton: HTMLButtonElement ` - Для кнопки. 
-`protected forcategory: HTMLElement ` - Для категории.
-`protected forimage: HTMLImageElement ` - Для изображения. 
+`protected forDescription: HTMLElement ` - Для описания. 
+`protected forButton: HTMLButtonElement ` - Для кнопки. 
+`protected forCategory: HTMLElement ` - Для категории.
+`protected forImage: HTMLImageElement ` - Для изображения. 
 
 #### Методы класса
 
@@ -233,8 +238,8 @@ Presenter - презентер содержит основную логику п
 
 #### Поля класса
 
-`protected forindex: HTMLElement ` - Номер позиции. 
-`protected fordeleteButton: HTMLButtonElement` - Кнопка удаления товара из корзины. 
+`protected forIndex: HTMLElement ` - Номер позиции. 
+`protected forDeleteButton: HTMLButtonElement` - Кнопка удаления товара из корзины. 
 
 #### Методы класса
 
@@ -245,8 +250,8 @@ Presenter - презентер содержит основную логику п
 
 ### Поля класса
 
-`protected forsubmit: HTMLButtonElement ` - Для отправки форм. 
-`protected forerrors: HTMLElement ` - Для ошибок. 
+`protected forSubmit: HTMLButtonElement ` - Для отправки форм. 
+`protected forErrors: HTMLElement ` - Для ошибок. 
 
 #### Методы класса
 
@@ -259,8 +264,8 @@ Presenter - презентер содержит основную логику п
 
 ### Поля класса
 
-`protected foremail: HTMLInputElement ` - Для электронного адреса.
-`protected forphone: HTMLInputElement ` - Для телефона.
+`protected forEmail: HTMLInputElement ` - Для электронного адреса.
+`protected forPhone: HTMLInputElement ` - Для телефона.
 
 #### Методы класса
 
@@ -273,13 +278,13 @@ Presenter - презентер содержит основную логику п
 
 ### Поля класса
 
-`protected forpaymentButtons: NodeListOf<HTMLButtonElement> ` - Для кнопки. 
-`protected foraddress: HTMLInputElement ` - Для адреса. 
+`protected forPaymentButtons: NodeListOf<HTMLButtonElement> ` - Для кнопки. 
+`protected forAddress: HTMLInputElement ` - Для адреса. 
 
 #### Методы класса
 
-`this.forpaymentButtons.forEach(button => ` - Для обработки кнопки. 
-`this.foraddress.addEventListener('input', () => ` - Для введения адреса. 
+`this.forPaymentButtons.forEach(button => ` - Для обработки кнопки. 
+`this.forAddress.addEventListener('input', () => ` - Для введения адреса. 
 `protected onSubmit(): void ` - Обработка отправки. 
 `set payment(value: TPayment) ` - Установка способа оплаты. 
 `set address(value: string) ` - Отправка адреса. 
@@ -302,8 +307,8 @@ Presenter - презентер содержит основную логику п
 
 #### Поля класса
 
-`protected cartbutton: HTMLButtonElement ` - Кнопка для корзины. 
-`protected counterelement: HTMLElement ` - Счетчик товаров в корзине. 
+`protected cartButton: HTMLButtonElement ` - Кнопка для корзины. 
+`protected counterElement: HTMLElement ` - Счетчик товаров в корзине. 
 
 #### Методы класса
 
@@ -314,9 +319,9 @@ Presenter - презентер содержит основную логику п
 
 #### Поля класса
 
-`protected forclosebutton: HTMLButtonElement ` - Кнопка закрытия. 
-`protected forcontent: HTMLElement ` - Контент. 
-`protected forhandleEscape: (event: KeyboardEvent) => void ` - Обработчик клавиши. 
+`protected forCloseButton: HTMLButtonElement ` - Кнопка закрытия. 
+`protected forContent: HTMLElement ` - Контент. 
+`protected forHandleEscape: (event: KeyboardEvent) => void ` - Обработчик клавиши. 
 
 #### Методы класса
 
@@ -339,21 +344,21 @@ Presenter - презентер содержит основную логику п
 
 #### Поля класса
 
-`protected forlist: HTMLElement ` - Список товаров. 
-`protected fortotal: HTMLElement ` - Общая стоимость товаров. 
-`protected forbutton: HTMLButtonElement ` - Кнопка для оформления заказа. 
+`protected forList: HTMLElement ` - Список товаров. 
+`protected forTotal: HTMLElement ` - Общая стоимость товаров. 
+`protected forButton: HTMLButtonElement ` - Кнопка для оформления заказа. 
 
 #### Методы класса 
 
-`this.forbutton.addEventListener('click', () => ` - Обновление корзины. 
+`this.forButton.addEventListener('click', () => ` - Обновление корзины. 
 
 ### Success
 Успешное оформление заказа. 
 
 #### Поля класса 
 
-`protected fortotal: HTMLElement ` - Итоговая сумма заказа. 
-`protected forcloseButton: HTMLButtonElement ` - Кнопка закрытия корзины. 
+`protected forTotal: HTMLElement ` - Итоговая сумма заказа. 
+`protected forCloseButton: HTMLButtonElement ` - Кнопка закрытия корзины. 
 
 #### Методы класса 
 

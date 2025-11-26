@@ -4,72 +4,72 @@ import { categoryMap, CDN_URL } from '../../../utils/constants.ts';
 
 // Объявление класса
 
-export class Cardpreview extends Card { 
+export class CardPreview extends Card { 
 
 // Поля класса 
 
-    protected fordescription: HTMLElement; 
-    protected forbutton: HTMLButtonElement; 
-    protected forcategory: HTMLElement; 
-    protected forimage: HTMLImageElement; 
+    protected forDescription: HTMLElement; 
+    protected forButton: HTMLButtonElement; 
+    protected forCategory: HTMLElement; 
+    protected forImage: HTMLImageElement; 
 
 // Конструктор
 
     constructor(container: HTMLElement, events: IEvents) { 
         super(container, events); 
-        this.fordescription = this.container.querySelector('.card__text') as HTMLElement; 
-        this.forbutton = this.container.querySelector('.card__button') as HTMLButtonElement; 
-        this.forcategory = this.container.querySelector('.card__category') as HTMLElement; 
-        this.forimage = this.container.querySelector('.card__image') as HTMLImageElement; 
+        this.forDescription = this.container.querySelector('.card__text') as HTMLElement; 
+        this.forButton = this.container.querySelector('.card__button') as HTMLButtonElement; 
+        this.forCategory = this.container.querySelector('.card__category') as HTMLElement; 
+        this.forImage = this.container.querySelector('.card__image') as HTMLImageElement; 
          
-        this.forbutton.addEventListener('click', () => { 
-            if (this.forbutton.disabled) { 
+        this.forButton.addEventListener('click', () => { 
+            if (this.forButton.disabled) { 
                 return; 
             } 
-            this.events.emit('preview:button:click', { id: this.forid }); 
+            this.events.emit('preview:button:click', { id: this.forId }); 
         }); 
     } 
 
 // Описание
 
     set description(value: string) { 
-        if (this.fordescription) { 
-            this.fordescription.textContent = value; 
+        if (this.forDescription) { 
+            this.forDescription.textContent = value; 
         } 
     } 
 
 // Категория
 
     set category(value: string) { 
-        if (this.forcategory) { 
-            this.forcategory.textContent = value; 
+        if (this.forCategory) { 
+            this.forCategory.textContent = value; 
             const categoryClass = categoryMap[value as keyof typeof categoryMap] || 'card__category_other'; 
-            this.forcategory.className = `card__category ${categoryClass}`; 
+            this.forCategory.className = `card__category ${categoryClass}`; 
         } 
     } 
 
 // Текст кнопки в зависимости от состояния карзины 
 
     set incart(value: boolean) { 
-        if (this.forbutton.disabled) { 
+        if (this.forButton.disabled) { 
             return; 
         } 
 
         if (value) { 
-            this.forbutton.textContent = 'Удалить из корзины'; 
+            this.forButton.textContent = 'Удалить из корзины'; 
         } else { 
-            this.forbutton.textContent = 'В корзину'; 
+            this.forButton.textContent = 'В корзину'; 
         } 
     } 
 
 // Установка изображения
     
     set image(value: string) { 
-        if (value && this.forimage) { 
+        if (value && this.forImage) { 
             const cleanPath = value.startsWith('/') ? value.slice(1) : value; 
             const fullImageUrl = CDN_URL + '/' + cleanPath; 
-            this.forimage.src = fullImageUrl; 
-            this.forimage.alt = this.fortitle?.textContent || 'Изображение товара'; 
+            this.forImage.src = fullImageUrl; 
+            this.forImage.alt = this.forTitle?.textContent || 'Изображение товара'; 
         } 
     } 
 
@@ -77,14 +77,14 @@ export class Cardpreview extends Card {
 
     set price(value: number | null) { 
         if (value === null) { 
-            this.setText(this.forprice, 'Бесценно'); 
-            this.forbutton.textContent = 'Недоступно'; 
-            this.setDisabled(this.forbutton, true); 
-            this.forbutton.classList.add('card__button_disabled'); 
+            this.setText(this.forPrice, 'Бесценно'); 
+            this.forButton.textContent = 'Недоступно'; 
+            this.setDisabled(this.forButton, true); 
+            this.forButton.classList.add('card__button_disabled'); 
         } else { 
-            this.setText(this.forprice, `${value} синапсов`); 
-            this.setDisabled(this.forbutton, false); 
-            this.forbutton.classList.remove('card__button_disabled'); 
+            this.setText(this.forPrice, `${value} синапсов`); 
+            this.setDisabled(this.forButton, false); 
+            this.forButton.classList.remove('card__button_disabled'); 
         } 
     } 
 }

@@ -14,31 +14,31 @@ export class ShoppingCartView extends Component<ShoppingCartWiewData> {
 
 // Поля класса
 
-    protected forlist: HTMLElement;
-    protected fortotal: HTMLElement;
-    protected forbutton: HTMLButtonElement;
+    protected forList: HTMLElement;
+    protected forTotal: HTMLElement;
+    protected forButton: HTMLButtonElement;
 
 // Конструктор
 
     constructor(container: HTMLElement, protected events: IEvents) {
         super(container);
-        this.forlist = this.container.querySelector('.basket__list')!;
-        this.fortotal = this.container.querySelector('.basket__price')!;
-        this.forbutton = this.container.querySelector('.basket__button')!;
+        this.forList = this.container.querySelector('.basket__list')!;
+        this.forTotal = this.container.querySelector('.basket__price')!;
+        this.forButton = this.container.querySelector('.basket__button')!;
         
 // Обновление корзины
 
-        this.forbutton.addEventListener('click', () => {
+        this.forButton.addEventListener('click', () => {
             this.events.emit('basket:order');
         });
     }
 
-    set shoppincartitems(value: HTMLElement[]) {
-        this.forlist.replaceChildren(...value);
-        this.setDisabled(this.forbutton, value.length === 0);
+    set shoppingCartItems(value: HTMLElement[]) {
+        this.forList.replaceChildren(...value);
+        this.setDisabled(this.forButton, value.length === 0);
     }
 
     set total(value: number) {
-        this.setText(this.fortotal, `${value} синапсов`);
+        this.setText(this.forTotal, `${value} синапсов`);
     }
 }

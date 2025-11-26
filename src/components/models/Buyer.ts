@@ -20,35 +20,35 @@ export class Buyer {
 
 // Способ оплаты
 
-    savepayment(payment: TPayment): void {
+    savePayment(payment: TPayment): void {
         this.buyer.payment = payment;
         this.events.emit('buyer:changed', { field: 'payment' });
     }
 
 // Электронный адрес
 
-    saveemail(email: string): void {
+    saveEmail(email: string): void {
         this.buyer.email = email;
         this.events.emit('buyer:changed', { field: 'email' });
     }
 
 // Телефон
 
-    savephone(phone: string): void {
+    savePhone(phone: string): void {
         this.buyer.phone = phone;
         this.events.emit('buyer:changed', { field: 'phone' }); 
     }
 
 // Адрес
 
-    saveaddress(address: string): void {
+    saveAddress(address: string): void {
         this.buyer.address = address;
         this.events.emit('buyer:changed', { field: 'address' });
     }
 
 // Проверка на ошибки     
 
-    buyervalidate(): { [key: string]: string } {
+    buyerValidate(): { [key: string]: string } {
         const errors: { [key: string]: string } = {};
 
         if (!this.buyer.payment) {
@@ -72,13 +72,13 @@ export class Buyer {
 
 // Сохранение данных покупателя
 
-    savebuyerdata(): IBuyer {
+    saveBuyerData(): IBuyer {
         return { ...this.buyer };
     }
 
 // Очистка данных
 
-    buyerclear(): void {
+    buyerClear(): void {
         this.buyer = {
             
             payment: '' as TPayment,

@@ -5,24 +5,24 @@ import { categoryMap, CDN_URL } from '../../../utils/constants.ts';
 
 // Объявление класса
 
-export class Cardcatolog extends Card { 
+export class CardCatolog extends Card { 
 
 // Поля класса
 
-    protected forcategory: HTMLElement;
-    protected forimage: HTMLImageElement;
+    protected forCategory: HTMLElement;
+    protected forImage: HTMLImageElement;
 
 // Конструктор
 
     constructor(container: HTMLElement, events: IEvents) { 
         super(container, events); 
         
-        this.forcategory = this.container.querySelector('.card__category') as HTMLElement;
-        this.forimage = this.container.querySelector('.card__image') as HTMLImageElement;
+        this.forCategory = this.container.querySelector('.card__category') as HTMLElement;
+        this.forImage = this.container.querySelector('.card__image') as HTMLImageElement;
          
         this.container.addEventListener('click', () => { 
-            if (this.forid) { 
-                this.events.emit('card:select', { id: this.forid }); 
+            if (this.forId) { 
+                this.events.emit('card:select', { id: this.forId }); 
             } 
         }); 
     } 
@@ -30,21 +30,21 @@ export class Cardcatolog extends Card {
 // Установка категорий
 
     set category(value: string) { 
-        if (this.forcategory && value) { 
-            this.forcategory.textContent = value; 
+        if (this.forCategory && value) { 
+            this.forCategory.textContent = value; 
             const categoryClass = categoryMap[value as keyof typeof categoryMap] || 'card__category_other'; 
-            this.forcategory.className = `card__category ${categoryClass}`; 
+            this.forCategory.className = `card__category ${categoryClass}`; 
         } 
     } 
 
 // Установка изображений
 
     set image(value: string) { 
-        if (value && this.forimage) { 
+        if (value && this.forImage) { 
             const cleanPath = value.startsWith('/') ? value.slice(1) : value; 
             const fullImageUrl = CDN_URL + '/' + cleanPath; 
-            this.forimage.src = fullImageUrl; 
-            this.forimage.alt = this.fortitle?.textContent || 'Изображение товара'; 
+            this.forImage.src = fullImageUrl; 
+            this.forImage.alt = this.forTitle?.textContent || 'Изображение товара'; 
         } 
     } 
 
